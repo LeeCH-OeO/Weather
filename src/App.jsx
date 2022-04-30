@@ -3,10 +3,16 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
+import styled, { css } from "styled-components";
 
 import Current from "./pages/current";
 import Hourly from "./pages/hourly";
 import Daily from "./pages/daily";
+const Location = styled.h2`
+  font-size: 1.5em;
+  text-align: center;
+  color: palevioletred;
+`;
 function App() {
   const [weatherData, setWeatherData] = useState("");
   const [cityName, setCityName] = useState("");
@@ -36,7 +42,7 @@ function App() {
   };
   const fetchCity = async (position) => {
     await fetch(
-      `https://nominatim.openstreetmap.org/reverse?lat=${position.coords.latitude}&lon=${position.coords.longitude}&format=json&zoom=14`
+      `https://nominatim.openstreetmap.org/reverse?lat=${position.coords.latitude}&lon=${position.coords.longitude}&format=json&zoom=8`
     ).then((res) =>
       res.json().then((cityData) => {
         setCityName(`${cityData.display_name}  `);
@@ -45,9 +51,8 @@ function App() {
   };
   return (
     <Container>
-      <p>位置: {cityName} </p>
+      <Location>位置: {cityName} </Location>
       <Navbar bg="light">
-        <Navbar.Brand>天氣</Navbar.Brand>
         <Nav>
           <Nav.Link href="/">Current</Nav.Link>
           <Nav.Link href="/Hourly">Hourly</Nav.Link>
