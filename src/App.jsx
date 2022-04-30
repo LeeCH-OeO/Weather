@@ -8,6 +8,8 @@ import styled, { css } from "styled-components";
 import Current from "./pages/current";
 import Hourly from "./pages/hourly";
 import Daily from "./pages/daily";
+import FetchData from "./api/fetchData";
+import FetchLocation from "./api/fetchLocation";
 const Location = styled.h2`
   font-size: 1.5em;
   text-align: center;
@@ -20,38 +22,22 @@ function App() {
   useEffect(() => {
     getLocation();
   }, []);
-  const getLocation = () => {
+  const getLocation = async () => {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((val) => {
-        fetchData(val);
-        fetchCity(val);
-      });
+      navigator.geolocation.getCurrentPosition(locationData);
     } else {
       alert("Geolocation is not supported by this browser.");
     }
   };
-  const fetchData = async (position) => {
-    await fetch(
-      `https://api.openweathermap.org/data/2.5/onecall?lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=ca20b15c0e2800058d1de6ba9abe60f6&units=metric&lang=zh_tw`
-    ).then((res) =>
-      res.json().then((data) => {
-        setWeatherData(data);
-        console.log(data);
-      })
-    );
+  const locationData = async (position) => {
+    const data = await FetchData(position);
+    const location = await FetchLocation(position);
+    setWeatherData(data);
+    setCityName(location);
   };
-  const fetchCity = async (position) => {
-    await fetch(
-      `https://nominatim.openstreetmap.org/reverse?lat=${position.coords.latitude}&lon=${position.coords.longitude}&format=json&zoom=8`
-    ).then((res) =>
-      res.json().then((cityData) => {
-        setCityName(`${cityData.display_name}  `);
-      })
-    );
-  };
+
   return (
     <Container>
-      <Location>位置: {cityName} </Location>
       <Navbar bg="light">
         <Nav>
           <Nav.Link href="/">Current</Nav.Link>
@@ -59,9 +45,13 @@ function App() {
           <Nav.Link href="/Daily">Daily</Nav.Link>
         </Nav>
       </Navbar>
+
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Current data={weatherData} />} />
+          <Route
+            path="/"
+            element={<Current data={weatherData} city={cityName} />}
+          />
           <Route path="/Hourly" element={<Hourly data={weatherData} />} />
           <Route path="/Daily" element={<Daily data={weatherData} />} />
         </Routes>
