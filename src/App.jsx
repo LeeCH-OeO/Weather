@@ -52,8 +52,14 @@ function App() {
             path="/"
             element={<Current data={weatherData} city={cityName} />}
           />
-          <Route path="/Hourly" element={<Hourly data={weatherData} />} />
-          <Route path="/Daily" element={<Daily data={weatherData} />} />
+          <Route
+            path="/Hourly"
+            element={<Hourly data={weatherData} city={cityName} />}
+          />
+          <Route
+            path="/Daily"
+            element={<Daily data={weatherData} city={cityName} />}
+          />
         </Routes>
       </BrowserRouter>
     </Container>
