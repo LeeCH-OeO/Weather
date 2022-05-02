@@ -8,13 +8,14 @@ import styled, { css } from "styled-components";
 import Current from "./pages/current";
 import Hourly from "./pages/hourly";
 import Daily from "./pages/daily";
-import Chart from "./pages/chrat";
 import FetchData from "./api/fetchData";
 import FetchLocation from "./api/fetchLocation";
-const Location = styled.h2`
-  font-size: 1.5em;
-  text-align: center;
-  color: palevioletred;
+const Footer = styled.a`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0.5;
+  text-decoration: none;
 `;
 function App() {
   const [weatherData, setWeatherData] = useState("");
@@ -63,6 +64,9 @@ function App() {
           />
         </Routes>
       </BrowserRouter>
+      <Footer href="https://github.com/LeeCH-OeO/Weather">
+        Copyright © ChiHsuan-Lee
+      </Footer>
     </Container>
   );
 }
