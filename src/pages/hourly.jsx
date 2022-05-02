@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { ListGroup, Image } from "react-bootstrap";
+import { ListGroup } from "react-bootstrap";
 import styled from "styled-components";
+import Chart from "./chrat";
 const CityTitle = styled.h1`
   font-size: 1.5em;
   color: palevioletred;
@@ -13,12 +14,14 @@ const WeatherData = styled.h1`
 
 const convertDate = (date) => {
   const d = new Date(date * 1000);
-  return d.toLocaleString();
+  return d.getHours() + ":00";
 };
+
 function Hourly({ data, city }) {
   return (
     <>
       {city && <CityTitle> {city.data.display_name} </CityTitle>}
+      {data && <Chart data={data} />}
       {data && (
         <ListGroup>
           {data.hourly.map((result) => {
@@ -36,10 +39,13 @@ function Hourly({ data, city }) {
                   </ListGroup.Item>
                   <ListGroup.Item>
                     {" "}
-                    <WeatherData>{result.temp}℃</WeatherData>{" "}
+                    <WeatherData>
+                      {result.temp}℃ {result.weather[0].description}
+                    </WeatherData>{" "}
                   </ListGroup.Item>
+
                   <ListGroup.Item>
-                    <WeatherData>{result.weather[0].description}</WeatherData>
+                    <WeatherData>Precipitation: {result.pop}</WeatherData>
                   </ListGroup.Item>
                 </ListGroup>
                 {clicked ? (
