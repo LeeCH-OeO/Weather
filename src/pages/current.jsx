@@ -1,8 +1,9 @@
 import { Card, ListGroup, Image } from "react-bootstrap";
 import styled from "styled-components";
-const convertDate = (date) => {
-  const d = new Date(date * 1000);
-  return d.toLocaleString();
+const convertDate = (date, offset) => {
+  const d = new Date((date + offset) * 1000);
+  console.log(d.toISOString());
+  return d.toISOString();
 };
 const Description = styled.p`
   font-weight: bold;
@@ -10,6 +11,8 @@ const Description = styled.p`
 `;
 const CityTitle = styled.h1`
   font-size: 1.5em;
+  color: palevioletred;
+  user-select: none;
 `;
 function Current({ data, city }) {
   return (
@@ -19,7 +22,8 @@ function Current({ data, city }) {
           <Card.Body>
             <Card.Header>
               <CityTitle>
-                {city.data.display_name} @ {convertDate(data.current.dt)}{" "}
+                {city.data.display_name} @{" "}
+                {convertDate(data.current.dt, data.timezone_offset)}{" "}
               </CityTitle>
             </Card.Header>
             <Card.Title>

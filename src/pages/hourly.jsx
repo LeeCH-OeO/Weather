@@ -12,9 +12,9 @@ const WeatherData = styled.h1`
   font-size: 1.2em;
 `;
 
-const convertDate = (date) => {
-  const d = new Date(date * 1000);
-  return d.getHours() + ":00";
+const convertDate = (date, offset) => {
+  const d = new Date((date + offset) * 1000);
+  return d.toISOString().substring(11, 16);
 };
 
 function Hourly({ data, city }) {
@@ -35,7 +35,9 @@ function Hourly({ data, city }) {
               >
                 <ListGroup horizontal>
                   <ListGroup.Item>
-                    <WeatherData>{convertDate(result.dt)}</WeatherData>
+                    <WeatherData>
+                      {convertDate(result.dt, data.timezone_offset)}
+                    </WeatherData>
                   </ListGroup.Item>
                   <ListGroup.Item>
                     {" "}
