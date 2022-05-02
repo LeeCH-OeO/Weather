@@ -28,6 +28,7 @@ function Current({ data, city }) {
                 {data.current.weather[0].description.toUpperCase()}
               </Description>
               <Image
+                alt="weather icon"
                 src={`https://openweathermap.org/img/wn/${data.current.weather[0].icon}@2x.png`}
               />
             </Card.Title>
