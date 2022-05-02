@@ -26,14 +26,26 @@ function App() {
   }, []);
   const getLocation = async () => {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(locationData);
+      navigator.geolocation.getCurrentPosition(locationData, defaultlocation);
     } else {
       alert("Geolocation is not supported by this browser.");
     }
   };
   const locationData = async (position) => {
-    const data = await FetchData(position);
-    const location = await FetchLocation(position);
+    const data = await FetchData(
+      position.coords.latitude,
+      position.coords.longitude
+    );
+    const location = await FetchLocation(
+      position.coords.latitude,
+      position.coords.longitude
+    );
+    setWeatherData(data);
+    setCityName(location);
+  };
+  const defaultlocation = async () => {
+    const data = await FetchData(52.51893, 13.37942);
+    const location = await FetchLocation(52.51893, 13.37942);
     setWeatherData(data);
     setCityName(location);
   };
