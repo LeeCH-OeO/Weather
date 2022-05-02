@@ -44,8 +44,11 @@ function App() {
     setCityName(location);
   };
   const defaultlocation = async () => {
-    const data = await FetchData(52.51893, 13.37942);
-    const location = await FetchLocation(52.51893, 13.37942);
+    const data = await FetchData(25.009172597250643, 121.52027756547784);
+    const location = await FetchLocation(
+      25.009172597250643,
+      121.52027756547784
+    );
     setWeatherData(data);
     setCityName(location);
   };
