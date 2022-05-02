@@ -8,6 +8,7 @@ import styled, { css } from "styled-components";
 import Current from "./pages/current";
 import Hourly from "./pages/hourly";
 import Daily from "./pages/daily";
+import Chart from "./pages/chrat";
 import FetchData from "./api/fetchData";
 import FetchLocation from "./api/fetchLocation";
 const Location = styled.h2`

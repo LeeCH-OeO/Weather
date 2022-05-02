@@ -1,6 +1,7 @@
 import axios from "axios";
+import { ApiKey } from "./ApiKey";
 const URL = "https://api.openweathermap.org/data/2.5/onecall";
-const api = "ca20b15c0e2800058d1de6ba9abe60f6";
+const api = ApiKey;
 const FetchData = async (position) => {
   const { data } = await axios.get(URL, {
     params: {
@@ -10,7 +11,6 @@ const FetchData = async (position) => {
       units: "metric",
     },
   });
-  console.log(data);
   return data;
 };
 export default FetchData;

@@ -9,7 +9,6 @@ async function FetchLocation(position) {
       format: "json",
     },
   });
-  console.log(data);
   return data;
 }
 export default FetchLocation;
