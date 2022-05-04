@@ -1,5 +1,5 @@
 import { useState } from "react";
-import React from 'react'
+import React from "react";
 import { ListGroup } from "react-bootstrap";
 import styled from "styled-components";
 const CityTitle = styled.h1`
@@ -18,7 +18,12 @@ const convertDate = (date, offset) => {
 function Daily({ data, city }) {
   return (
     <>
-      {city && <CityTitle> {city.data.display_name} </CityTitle>}
+      {city && (
+        <CityTitle>
+          {city.data.display_name}
+          <br /> Daily forecast
+        </CityTitle>
+      )}
       {data && (
         <ListGroup>
           {data.daily.map((result) => {

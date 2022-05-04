@@ -16,6 +16,7 @@ const Footer = styled.div`
   align-items: center;
   opacity: 0.5;
   text-decoration: none;
+  margin: auto;
 `;
 function App() {
   const [weatherData, setWeatherData] = useState("");

@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import { useState } from "react";
 import { ListGroup } from "react-bootstrap";
 import styled from "styled-components";
@@ -21,7 +21,13 @@ const convertDate = (date, offset) => {
 function Hourly({ data, city }) {
   return (
     <>
-      {city && <CityTitle> {city.data.display_name} </CityTitle>}
+      {city && (
+        <CityTitle>
+          {" "}
+          {city.data.display_name}
+          <br /> Hourly forecast{" "}
+        </CityTitle>
+      )}
       {data && <Chart data={data} />}
       {data && (
         <ListGroup>
