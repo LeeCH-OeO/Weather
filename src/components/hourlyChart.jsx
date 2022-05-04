@@ -5,15 +5,19 @@ import {
   AreaChart,
   Area,
   YAxis,
+  XAxis,
+  Tooltip,
 } from "recharts";
-import React from 'react'
+import React from "react";
 
-function Chart({ data }) {
+function HourlyChart({ data }) {
   return (
     <>
       <ResponsiveContainer width="100%" height={250}>
-        <AreaChart data={data.hourly}>
+        <AreaChart data={data}>
           <YAxis />
+          <XAxis dataKey="date" />
+          <Tooltip />
           <Legend verticalAlign="top" height={25} />
           <Area
             name="temperature"
@@ -28,4 +32,4 @@ function Chart({ data }) {
     </>
   );
 }
-export default Chart;
+export default HourlyChart;

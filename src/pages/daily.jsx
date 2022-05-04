@@ -2,6 +2,8 @@ import { useState } from "react";
 import React from "react";
 import { ListGroup } from "react-bootstrap";
 import styled from "styled-components";
+
+import DailyChart from "../components/dailyChart";
 const CityTitle = styled.h1`
   font-size: 1.5em;
   color: palevioletred;
@@ -19,6 +21,14 @@ const convertDate = (date, offset) => {
   return d.toISOString().substring(0, 10);
 };
 function Daily({ data, city }) {
+  const temp = [];
+  {
+    data &&
+      data.daily.map((result) => {
+        result.temp.date = convertDate(result.dt, data.timezone_offset);
+        temp.push(result.temp);
+      });
+  }
   return (
     <>
       {city && (
@@ -27,6 +37,7 @@ function Daily({ data, city }) {
           <CityTitle>Daily forecast</CityTitle>
         </>
       )}
+      {data && <DailyChart data={temp} />}
       {data && (
         <ListGroup>
           {data.daily.map((result) => {

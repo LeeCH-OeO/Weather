@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { ListGroup } from "react-bootstrap";
 import styled from "styled-components";
-import Chart from "./chrat";
+import HourlyChart from "../components/hourlyChart";
 const CityTitle = styled.h1`
   font-size: 1.5em;
   color: palevioletred;
@@ -22,6 +22,14 @@ const convertDate = (date, offset) => {
 };
 
 function Hourly({ data, city }) {
+  const temp = [];
+  {
+    data &&
+      data.hourly.map((result) => {
+        result.date = convertDate(result.dt, data.timezone_offset);
+        temp.push(result);
+      });
+  }
   return (
     <>
       {city && (
@@ -30,7 +38,7 @@ function Hourly({ data, city }) {
           <CityTitle>Hourly forecast</CityTitle>
         </>
       )}
-      {data && <Chart data={data} />}
+      {data && <HourlyChart data={temp} />}
       {data && (
         <ListGroup>
           {data.hourly.map((result) => {
