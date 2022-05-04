@@ -7,7 +7,7 @@ async function FetchGeo(input) {
       format: "json",
     },
   });
-  console.log(data);
+
   return data;
 }
 export default FetchGeo;

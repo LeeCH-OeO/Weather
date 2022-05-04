@@ -1,8 +1,9 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
+
 import styled from "styled-components";
 import Current from "./pages/current";
 import Hourly from "./pages/hourly";
@@ -22,9 +23,10 @@ function App() {
   const [weatherData, setWeatherData] = useState("");
   const [cityName, setCityName] = useState("");
   const [location, setLocation] = useState("");
-  const handleOnchange = (e) => {
-    setLocation(e.target.value);
-  };
+  const currentRef = useRef();
+  const hourlyRef = useRef();
+  const dailyRef = useRef();
+
   useEffect(() => {
     getLocation();
   }, []);
@@ -57,38 +59,76 @@ function App() {
     setCityName(location);
   };
   const handleClick = () => {
-    getGeoByInput(location);
-    setLocation("");
+    if (location) {
+      getGeoByInput(location);
+      setLocation("");
+    } else {
+      alert("請輸入");
+    }
   };
   const getGeoByInput = async (input) => {
     const res = await FetchGeo(input);
-    console.log(res.data[0].lat, res.data[0].lon);
-    const data = await FetchData(res.data[0].lat, res.data[0].lon);
-    const location = await FetchLocation(res.data[0].lat, res.data[0].lon);
-    setWeatherData(data);
-    setCityName(location);
+    if (res.data[0]) {
+      const data = await FetchData(res.data[0].lat, res.data[0].lon);
+      const location = await FetchLocation(res.data[0].lat, res.data[0].lon);
+      setWeatherData(data);
+      setCityName(location);
+    } else {
+      console.log("location not found");
+    }
   };
 
   return (
     <Container>
-      <Navbar bg="light">
+      <Navbar bg="light" fixed="top">
         <Nav>
-          <Nav.Link href="/">Current</Nav.Link>
-          <Nav.Link href="/Hourly">Hourly</Nav.Link>
-          <Nav.Link href="/Daily">Daily</Nav.Link>
+          <Nav.Link
+            onClick={() =>
+              currentRef.current.scrollIntoView({ behavior: "smooth" })
+            }
+          >
+            Current
+          </Nav.Link>
+          <Nav.Link
+            onClick={() =>
+              hourlyRef.current.scrollIntoView({ behavior: "smooth" })
+            }
+          >
+            Hourly
+          </Nav.Link>
+          <Nav.Link
+            onClick={() =>
+              dailyRef.current.scrollIntoView({ behavior: "smooth" })
+            }
+          >
+            Daily
+          </Nav.Link>
         </Nav>
       </Navbar>
       <input
         placeholder="search"
         type="text"
         value={location}
-        onChange={handleOnchange}
+        onChange={(e) => {
+          setLocation(e.target.value);
+        }}
       ></input>
       <p>地點: {location} </p>
       <button onClick={handleClick}>search</button>
-      <Current data={weatherData} city={cityName} />
-      <Hourly data={weatherData} city={cityName} />
-      <Daily data={weatherData} city={cityName} />
+      <button
+        onClick={() => dailyRef.current.scrollIntoView({ behavior: "smooth" })}
+      >
+        daily
+      </button>
+      <div ref={currentRef}>
+        <Current data={weatherData} city={cityName} />
+      </div>
+      <div ref={hourlyRef}>
+        <Hourly data={weatherData} city={cityName} />
+      </div>
+      <div ref={dailyRef}>
+        <Daily data={weatherData} city={cityName} />
+      </div>
 
       <Footer>
         <a
