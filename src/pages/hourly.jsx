@@ -7,6 +7,9 @@ const CityTitle = styled.h1`
   font-size: 1.5em;
   color: palevioletred;
   user-select: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 const WeatherData = styled.h1`
   user-select: none;
@@ -22,11 +25,10 @@ function Hourly({ data, city }) {
   return (
     <>
       {city && (
-        <CityTitle>
-          {" "}
-          {city.data.display_name}
-          <br /> Hourly forecast{" "}
-        </CityTitle>
+        <>
+          <CityTitle>{city.data.display_name}</CityTitle>
+          <CityTitle>Hourly forecast</CityTitle>
+        </>
       )}
       {data && <Chart data={data} />}
       {data && (
@@ -40,7 +42,7 @@ function Hourly({ data, city }) {
                   setClicked(!clicked);
                 }}
               >
-                <ListGroup horizontal>
+                <ListGroup horizontal="sm">
                   <ListGroup.Item>
                     <WeatherData>
                       {convertDate(result.dt, data.timezone_offset)}
@@ -57,10 +59,8 @@ function Hourly({ data, city }) {
                     <WeatherData>Precipitation: {result.pop}</WeatherData>
                   </ListGroup.Item>
                 </ListGroup>
-                {clicked ? (
+                {clicked && (
                   <WeatherData>Humidity: {result.humidity}%</WeatherData>
-                ) : (
-                  ""
                 )}
               </ListGroup.Item>
             );

@@ -6,6 +6,9 @@ const CityTitle = styled.h1`
   font-size: 1.5em;
   color: palevioletred;
   user-select: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 const WeatherData = styled.h1`
   user-select: none;
@@ -19,10 +22,10 @@ function Daily({ data, city }) {
   return (
     <>
       {city && (
-        <CityTitle>
-          {city.data.display_name}
-          <br /> Daily forecast
-        </CityTitle>
+        <>
+          <CityTitle>{city.data.display_name}</CityTitle>{" "}
+          <CityTitle>Daily forecast</CityTitle>
+        </>
       )}
       {data && (
         <ListGroup>
@@ -35,14 +38,13 @@ function Daily({ data, city }) {
                   setClicked(!clicked);
                 }}
               >
-                <ListGroup horizontal>
+                <ListGroup horizontal="sm">
                   <ListGroup.Item>
                     <WeatherData>
                       {convertDate(result.dt, data.timezone_offset)}
                     </WeatherData>
                   </ListGroup.Item>
                   <ListGroup.Item>
-                    {" "}
                     <WeatherData>
                       Day: {result.temp.day}℃ Night: {result.temp.night}{" "}
                     </WeatherData>{" "}
@@ -51,10 +53,8 @@ function Daily({ data, city }) {
                     <WeatherData>{result.weather[0].description}</WeatherData>
                   </ListGroup.Item>
                 </ListGroup>
-                {clicked ? (
+                {clicked && (
                   <WeatherData>Humidity: {result.humidity}%</WeatherData>
-                ) : (
-                  ""
                 )}
               </ListGroup.Item>
             );

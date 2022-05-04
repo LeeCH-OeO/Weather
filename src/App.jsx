@@ -80,11 +80,13 @@ function App() {
 
   return (
     <Container>
-      <Navbar bg="light" fixed="top">
+      <Navbar bg="light" sticky="top">
         <Nav>
           <Nav.Link
             onClick={() =>
-              currentRef.current.scrollIntoView({ behavior: "smooth" })
+              currentRef.current.scrollIntoView({
+                behavior: "smooth",
+              })
             }
           >
             Current
@@ -115,11 +117,6 @@ function App() {
       ></input>
       <p>地點: {location} </p>
       <button onClick={handleClick}>search</button>
-      <button
-        onClick={() => dailyRef.current.scrollIntoView({ behavior: "smooth" })}
-      >
-        daily
-      </button>
       <div ref={currentRef}>
         <Current data={weatherData} city={cityName} />
       </div>
