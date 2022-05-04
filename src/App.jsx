@@ -10,7 +10,7 @@ import Daily from "./pages/daily";
 import FetchData from "./api/fetchData";
 import FetchLocation from "./api/fetchLocation";
 import FetchGeo from "./api/fetchGeo";
-const Footer = styled.a`
+const Footer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -89,8 +89,13 @@ function App() {
       <Hourly data={weatherData} city={cityName} />
       <Daily data={weatherData} city={cityName} />
 
-      <Footer href="https://github.com/LeeCH-OeO/Weather">
-        Copyright © ChiHsuan-Lee
+      <Footer>
+        <a
+          href="https://github.com/LeeCH-OeO/Weather"
+          style={{ textDecoration: "none" }}
+        >
+          Copyright © ChiHsuan-Lee
+        </a>
       </Footer>
     </Container>
   );
