@@ -12,6 +12,7 @@ const FetchData = async (latitude, longitude) => {
     },
   });
   console.log(data);
+
   return data;
 };
 export default FetchData;

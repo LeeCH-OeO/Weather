@@ -1,15 +1,15 @@
+import React from "react";
 import { useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
-import styled, { css } from "styled-components";
-
+import styled from "styled-components";
 import Current from "./pages/current";
 import Hourly from "./pages/hourly";
 import Daily from "./pages/daily";
 import FetchData from "./api/fetchData";
 import FetchLocation from "./api/fetchLocation";
+import FetchGeo from "./api/fetchGeo";
 const Footer = styled.a`
   display: flex;
   justify-content: center;
@@ -20,7 +20,10 @@ const Footer = styled.a`
 function App() {
   const [weatherData, setWeatherData] = useState("");
   const [cityName, setCityName] = useState("");
-
+  const [location, setLocation] = useState("");
+  const handleOnchange = (e) => {
+    setLocation(e.target.value);
+  };
   useEffect(() => {
     getLocation();
   }, []);
@@ -52,6 +55,18 @@ function App() {
     setWeatherData(data);
     setCityName(location);
   };
+  const handleClick = () => {
+    getGeoByInput(location);
+    setLocation("");
+  };
+  const getGeoByInput = async (input) => {
+    const res = await FetchGeo(input);
+    console.log(res.data[0].lat, res.data[0].lon);
+    const data = await FetchData(res.data[0].lat, res.data[0].lon);
+    const location = await FetchLocation(res.data[0].lat, res.data[0].lon);
+    setWeatherData(data);
+    setCityName(location);
+  };
 
   return (
     <Container>
@@ -62,23 +77,18 @@ function App() {
           <Nav.Link href="/Daily">Daily</Nav.Link>
         </Nav>
       </Navbar>
+      <input
+        placeholder="search"
+        type="text"
+        value={location}
+        onChange={handleOnchange}
+      ></input>
+      <p>地點: {location} </p>
+      <button onClick={handleClick}>search</button>
+      <Current data={weatherData} city={cityName} />
+      <Hourly data={weatherData} city={cityName} />
+      <Daily data={weatherData} city={cityName} />
 
-      <BrowserRouter>
-        <Routes>
-          <Route
-            path="/"
-            element={<Current data={weatherData} city={cityName} />}
-          />
-          <Route
-            path="/Hourly"
-            element={<Hourly data={weatherData} city={cityName} />}
-          />
-          <Route
-            path="/Daily"
-            element={<Daily data={weatherData} city={cityName} />}
-          />
-        </Routes>
-      </BrowserRouter>
       <Footer href="https://github.com/LeeCH-OeO/Weather">
         Copyright © ChiHsuan-Lee
       </Footer>

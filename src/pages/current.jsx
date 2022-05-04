@@ -1,8 +1,8 @@
 import { Card, ListGroup, Image } from "react-bootstrap";
+import React from "react";
 import styled from "styled-components";
 const convertDate = (date, offset) => {
   const d = new Date((date + offset) * 1000);
-  console.log(d.toISOString());
   return d.toISOString();
 };
 const Description = styled.p`
