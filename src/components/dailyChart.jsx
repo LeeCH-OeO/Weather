@@ -1,12 +1,11 @@
 import {
-  CartesianGrid,
   ResponsiveContainer,
   Legend,
-  AreaChart,
-  Area,
   YAxis,
   XAxis,
   Tooltip,
+  LineChart,
+  Line,
 } from "recharts";
 import React from "react";
 
@@ -14,27 +13,26 @@ function DailyChart({ data }) {
   return (
     <>
       <ResponsiveContainer width="100%" height={250}>
-        <AreaChart data={data}>
+        <LineChart data={data}>
           <YAxis />
           <XAxis dataKey="date" />
           <Legend verticalAlign="top" height={25} />
-          <Area
-            name="day temperature"
+          <Line
+            name="day temperature(℃)"
             type="monotone"
             dataKey="day"
             stroke="#8884d8"
-            fill="#8884d8"
+            unit="℃"
           />
-          <Area
-            name="night temperature"
+          <Line
+            name="night temperature(℃)"
             type="monotone"
             dataKey="night"
             stroke="#f54453"
-            fill="#f54453"
+            unit="℃"
           />
-          <CartesianGrid stroke="#ccc" />
           <Tooltip />
-        </AreaChart>
+        </LineChart>
       </ResponsiveContainer>
     </>
   );
