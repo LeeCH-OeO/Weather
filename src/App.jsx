@@ -3,7 +3,9 @@ import { useState, useEffect, useRef } from "react";
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
-
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import styled from "styled-components";
 import Current from "./pages/current";
 import Hourly from "./pages/hourly";
@@ -107,16 +109,24 @@ function App() {
           </Nav.Link>
         </Nav>
       </Navbar>
-      <input
-        placeholder="search"
-        type="text"
+
+      <TextField
+        label="search"
+        variant="standard"
         value={location}
         onChange={(e) => {
           setLocation(e.target.value);
         }}
-      ></input>
+      />
       <p>地點: {location} </p>
-      <button onClick={handleClick}>search</button>
+      <Button
+        variant="outlined"
+        onClick={handleClick}
+        startIcon={<SearchOutlinedIcon />}
+      >
+        {" "}
+        Search
+      </Button>
       <div ref={currentRef}>
         <Current data={weatherData} city={cityName} />
       </div>
