@@ -1,7 +1,7 @@
 import {
   Card,
   CardContent,
-  CardActionArea,
+  CardActions,
   Table,
   TableBody,
   TableCell,
@@ -9,6 +9,7 @@ import {
   TableHead,
   TableRow,
   Typography,
+  Button,
 } from "@mui/material";
 import React from "react";
 import { useState } from "react";
@@ -41,54 +42,55 @@ function Hourly({ data }) {
   return (
     <MainContainer>
       <Card variant="outlined">
-        <CardActionArea onClick={() => setClicked(!clicked)}>
-          <CardContent>
-            <Title>
-              <Typography variant="h6">Hourly Forecast</Typography>
-            </Title>
-            <HourlyChart data={temp} />
-            {clicked && (
-              <TableContainer>
-                <Table>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>Time</TableCell>
-                      <TableCell align="right">Weather</TableCell>
-                      <TableCell align="right">Temperture</TableCell>
-                      <TableCell align="right">Feels like</TableCell>
-                      <TableCell align="right">Precipitation</TableCell>
-                      <TableCell align="right">Humidity</TableCell>
-                      <TableCell align="right">Wind Speed</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {data.hourly.map((result) => {
-                      return (
-                        <TableRow key={result.dt}>
-                          <TableCell>{result.date}</TableCell>
-                          <TableCell align="right">
-                            {result.weather[0].description}{" "}
-                          </TableCell>
-                          <TableCell align="right">{result.temp}℃</TableCell>
-                          <TableCell align="right">
-                            {result.feels_like}℃
-                          </TableCell>
-                          <TableCell align="right">{result.pop}</TableCell>
-                          <TableCell align="right">
-                            {result.humidity}%
-                          </TableCell>
-                          <TableCell align="right">
-                            {result.wind_speed} m/h
-                          </TableCell>
-                        </TableRow>
-                      );
-                    })}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            )}
-          </CardContent>
-        </CardActionArea>
+        <CardContent>
+          <Title>
+            <Typography variant="h6">Hourly Forecast</Typography>
+          </Title>
+          <HourlyChart data={temp} />
+          {clicked && (
+            <TableContainer>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Time</TableCell>
+                    <TableCell align="right">Weather</TableCell>
+                    <TableCell align="right">Temperture</TableCell>
+                    <TableCell align="right">Feels like</TableCell>
+                    <TableCell align="right">Precipitation</TableCell>
+                    <TableCell align="right">Humidity</TableCell>
+                    <TableCell align="right">Wind Speed</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {data.hourly.map((result) => {
+                    return (
+                      <TableRow key={result.dt}>
+                        <TableCell>{result.date}</TableCell>
+                        <TableCell align="right">
+                          {result.weather[0].description}{" "}
+                        </TableCell>
+                        <TableCell align="right">{result.temp}℃</TableCell>
+                        <TableCell align="right">
+                          {result.feels_like}℃
+                        </TableCell>
+                        <TableCell align="right">{result.pop}</TableCell>
+                        <TableCell align="right">{result.humidity}%</TableCell>
+                        <TableCell align="right">
+                          {result.wind_speed} m/h
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          )}
+        </CardContent>
+        <CardActions>
+          <Button onClick={() => setClicked(!clicked)}>
+            {clicked ? "close" : "detail"}
+          </Button>
+        </CardActions>
       </Card>
     </MainContainer>
   );

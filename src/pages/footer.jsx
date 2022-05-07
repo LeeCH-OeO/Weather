@@ -1,3 +1,4 @@
+import { Typography } from "@mui/material";
 import styled from "styled-components";
 
 const MainContainer = styled.div`
@@ -11,12 +12,14 @@ const MainContainer = styled.div`
 function Footer() {
   return (
     <MainContainer>
-      <a
-        href="https://github.com/LeeCH-OeO/Weather"
-        style={{ textDecoration: "none" }}
-      >
-        Copyright © ChiHsuan-Lee
-      </a>
+      <Typography>
+        <a
+          href="https://github.com/LeeCH-OeO/Weather"
+          style={{ textDecoration: "none" }}
+        >
+          Copyright © ChiHsuan-Lee
+        </a>
+      </Typography>
     </MainContainer>
   );
 }
