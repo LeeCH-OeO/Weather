@@ -1,13 +1,24 @@
-import { Card, ListGroup, Image } from "react-bootstrap";
+// import { Card, ListGroup, Image } from "react-bootstrap";
 import React, { useState } from "react";
 import styled from "styled-components";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import CardActions from "@mui/material/CardActions";
+import { Button } from "@mui/material";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+
 const convertDate = (date, offset) => {
   const d = new Date((date + offset) * 1000);
-  return d.toISOString();
+  return d.toISOString().substring(11, 16);
 };
 const Description = styled.p`
   user-select: none;
-  font-size: 1.2em;
+  font-size: 2em;
   display: inline;
   user-select: none;
 `;
@@ -21,43 +32,61 @@ function Current({ data, city }) {
   return (
     <>
       {city && data && (
-        <Card className="text-center" onClick={() => setClicked(!clicked)}>
-          <Card.Body>
-            <Card.Header>
-              <CityTitle>
-                {city.data.display_name} @{" "}
-                {convertDate(data.current.dt, data.timezone_offset)}{" "}
-              </CityTitle>
-            </Card.Header>
-            <Card.Title>
-              <Description>
-                {data.current.temp}℃{" "}
-                {data.current.weather[0].description.toUpperCase()}
-              </Description>
-              <Image
-                alt="weather icon"
-                src={`https://openweathermap.org/img/wn/${data.current.weather[0].icon}@2x.png`}
-              />
-            </Card.Title>
+        <Card sx={{ maxWidth: 345 }}>
+          <CardContent>
+            <CityTitle>
+              Current Weather{" "}
+              {convertDate(data.current.dt, data.timezone_offset)}
+            </CityTitle>
+            <Description>{data.current.temp}℃</Description>
+            <img
+              src={`https://openweathermap.org/img/wn/${data.current.weather[0].icon}@2x.png`}
+            />
+            <br /> {data.current.weather[0].description}
             {clicked && (
-              <Card.Body>
-                <ListGroup horizontal="sm" className="text-center">
-                  <ListGroup.Item>
-                    Feels like: {data.current.feels_like}°C
-                  </ListGroup.Item>
-                  <ListGroup.Item>
-                    Humidity: {data.current.humidity}%
-                  </ListGroup.Item>
-                  <ListGroup.Item>
-                    Cloudiness: {data.current.clouds}%
-                  </ListGroup.Item>
-                  <ListGroup.Item>
-                    Visibility: {data.current.visibility}m
-                  </ListGroup.Item>
-                </ListGroup>
-              </Card.Body>
+              <TableContainer>
+                <Table>
+                  <TableBody>
+                    <TableRow>
+                      <TableCell>Humidity</TableCell>
+                      <TableCell align="right">
+                        {data.current.humidity}%
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell>Feels like</TableCell>
+                      <TableCell align="right">
+                        {data.current.feels_like}℃
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell>Cloudiness</TableCell>
+                      <TableCell align="right">
+                        {data.current.clouds}%
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell>Visibility</TableCell>
+                      <TableCell align="right">
+                        {data.current.visibility} m
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell>Wind speed</TableCell>
+                      <TableCell align="right">
+                        {data.current.wind_speed} m/h
+                      </TableCell>
+                    </TableRow>
+                  </TableBody>
+                </Table>
+              </TableContainer>
             )}
-          </Card.Body>
+          </CardContent>
+          <CardActions>
+            <Button onClick={() => setClicked(!clicked)}>
+              {clicked ? "close" : "details"}
+            </Button>
+          </CardActions>
         </Card>
       )}
     </>
