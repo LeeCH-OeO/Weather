@@ -16,6 +16,10 @@ const Description = styled.p`
   display: inline;
   user-select: none;
   font-family: "Roboto";
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
 `;
 const MainContainer = styled.div`
   padding-top: 1rem;
@@ -31,10 +35,14 @@ function Current({ data }) {
       <Card sx={{ maxWidth: 345 }} variant="outlined">
         <CardContent>
           <Typography variant="h6">Current Weather</Typography>
-          <Description>{data.current.temp}℃</Description>
-          <img
-            src={`https://openweathermap.org/img/wn/${data.current.weather[0].icon}@2x.png`}
-          />
+          <Description>
+            {data.current.temp}℃
+            <img
+              src={`https://openweathermap.org/img/wn/${data.current.weather[0].icon}@2x.png`}
+              alt={data.current.weather[0].description}
+            />
+          </Description>
+
           <br />
           <Typography variant="subtitle1">
             {data.current.weather[0].description}
