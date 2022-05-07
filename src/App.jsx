@@ -16,7 +16,6 @@ import FetchGeo from "./api/fetchGeo";
 import Footer from "./pages/footer";
 
 const Title = styled.div`
-  font-size: 1.5em;
   color: #3f51b5;
   user-select: none;
   display: flex;
@@ -93,10 +92,10 @@ function App() {
         <Container>
           {cityName && (
             <Title>
-              <Typography variant="h4">{cityName.data.display_name}</Typography>
+              <Typography variant="h5">{cityName.data.display_name}</Typography>
               <Search>
                 <TextField
-                  label="search"
+                  label="Search"
                   variant="outlined"
                   value={location}
                   size="small"

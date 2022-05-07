@@ -73,7 +73,9 @@ function Hourly({ data }) {
                         <TableCell align="right">
                           {result.feels_like}℃
                         </TableCell>
-                        <TableCell align="right">{result.pop}</TableCell>
+                        <TableCell align="right">
+                          {Math.round(result.pop * 100)}%
+                        </TableCell>
                         <TableCell align="right">{result.humidity}%</TableCell>
                         <TableCell align="right">
                           {result.wind_speed} m/h

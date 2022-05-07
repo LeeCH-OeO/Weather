@@ -78,7 +78,9 @@ function Daily({ data }) {
                           day: {result.feels_like.day}℃ <br />
                           night: {result.feels_like.night}℃
                         </TableCell>
-                        <TableCell align="right">{result.pop}</TableCell>
+                        <TableCell align="right">
+                          {Math.round(result.pop * 100)}%
+                        </TableCell>
                         <TableCell align="right">{result.humidity}%</TableCell>
                         <TableCell align="right">
                           {result.wind_speed} m/h
