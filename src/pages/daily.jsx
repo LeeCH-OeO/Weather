@@ -48,6 +48,11 @@ function Daily({ data }) {
             <Typography variant="h6">Daily Forecast</Typography>
           </Title>
           <DailyChart data={temp} />
+          <CardActions>
+            <Button onClick={() => setClicked(!clicked)}>
+              {clicked ? "close" : "detail"}
+            </Button>
+          </CardActions>
           {clicked && (
             <TableContainer>
               <Table>
@@ -93,11 +98,6 @@ function Daily({ data }) {
             </TableContainer>
           )}
         </CardContent>
-        <CardActions>
-          <Button onClick={() => setClicked(!clicked)}>
-            {clicked ? "close" : "detail"}
-          </Button>
-        </CardActions>
       </Card>
     </MainContainer>
   );

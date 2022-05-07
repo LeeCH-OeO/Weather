@@ -47,6 +47,11 @@ function Hourly({ data }) {
             <Typography variant="h6">Hourly Forecast</Typography>
           </Title>
           <HourlyChart data={temp} />
+          <CardActions>
+            <Button onClick={() => setClicked(!clicked)}>
+              {clicked ? "close" : "detail"}
+            </Button>
+          </CardActions>
           {clicked && (
             <TableContainer>
               <Table>
@@ -88,11 +93,6 @@ function Hourly({ data }) {
             </TableContainer>
           )}
         </CardContent>
-        <CardActions>
-          <Button onClick={() => setClicked(!clicked)}>
-            {clicked ? "close" : "detail"}
-          </Button>
-        </CardActions>
       </Card>
     </MainContainer>
   );

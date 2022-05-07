@@ -47,6 +47,11 @@ function Current({ data }) {
           <Typography variant="subtitle1">
             {data.current.weather[0].description}
           </Typography>
+          <CardActions>
+            <Button onClick={() => setClicked(!clicked)}>
+              {clicked ? "close" : "detail"}
+            </Button>
+          </CardActions>
           {clicked && (
             <TableContainer>
               <Table>
@@ -81,11 +86,6 @@ function Current({ data }) {
             </TableContainer>
           )}
         </CardContent>
-        <CardActions>
-          <Button onClick={() => setClicked(!clicked)}>
-            {clicked ? "close" : "detail"}
-          </Button>
-        </CardActions>
       </Card>
     </MainContainer>
   );
