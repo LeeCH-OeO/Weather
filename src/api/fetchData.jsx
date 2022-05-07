@@ -11,7 +11,6 @@ const FetchData = async (latitude, longitude) => {
       units: "metric",
     },
   });
-  console.log(data);
 
   return data;
 };
