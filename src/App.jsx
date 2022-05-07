@@ -5,7 +5,6 @@ import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import IconButton from "@mui/material/IconButton";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-import Snackbar from "@mui/material/Snackbar";
 import LinearProgress from "@mui/material/LinearProgress";
 import styled from "styled-components";
 import Current from "./pages/current";
@@ -34,7 +33,7 @@ function App() {
   const [weatherData, setWeatherData] = useState("");
   const [cityName, setCityName] = useState("");
   const [location, setLocation] = useState("");
-  const [toast, setToast] = useState(true);
+
   const currentRef = useRef();
   const hourlyRef = useRef();
   const dailyRef = useRef();
@@ -85,8 +84,6 @@ function App() {
       const location = await FetchLocation(res.data[0].lat, res.data[0].lon);
       setWeatherData(data);
       setCityName(location);
-    } else {
-      console.log("location not found");
     }
   };
 
@@ -123,14 +120,7 @@ function App() {
           <div ref={dailyRef}>
             <Daily data={weatherData} />
           </div>
-          <Snackbar
-            open={toast}
-            autoHideDuration={5000}
-            message="Click each section for more information!"
-            onClose={() => {
-              setToast(false);
-            }}
-          />
+
           <Footer />
         </Container>
       ) : (

@@ -16,7 +16,7 @@ function DailyChart({ data }) {
         <LineChart data={data}>
           <YAxis />
           <XAxis dataKey="date" />
-          <Legend verticalAlign="top" height={25} />
+          <Legend verticalAlign="top" height={50} />
           <Line
             name="day temperature(℃)"
             type="monotone"

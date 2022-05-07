@@ -17,7 +17,7 @@ function HourlyChart({ data }) {
           <YAxis />
           <XAxis dataKey="date" />
           <Tooltip />
-          <Legend verticalAlign="top" height={25} />
+          <Legend verticalAlign="top" height={50} />
           <Line
             name="temperature(℃)"
             type="monotone"
