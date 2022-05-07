@@ -22,15 +22,17 @@ function HourlyChart({ data }) {
             name="temperature(℃)"
             type="monotone"
             dataKey="temp"
-            stroke="#8884d8"
+            stroke="#002884"
             unit="℃"
+            dot={false}
           />
           <Line
             name="feels like(℃)"
             type="monotone"
             dataKey="feels_like"
-            stroke="#f3601c"
+            stroke="#ba000d"
             unit="℃"
+            dot={false}
           />
         </LineChart>
       </ResponsiveContainer>

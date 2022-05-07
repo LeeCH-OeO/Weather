@@ -21,15 +21,17 @@ function DailyChart({ data }) {
             name="day temperature(℃)"
             type="monotone"
             dataKey="day"
-            stroke="#8884d8"
+            stroke="#002884"
             unit="℃"
+            dot={false}
           />
           <Line
             name="night temperature(℃)"
             type="monotone"
             dataKey="night"
-            stroke="#f54453"
+            stroke="#ba000d"
             unit="℃"
+            dot={false}
           />
           <Tooltip />
         </LineChart>

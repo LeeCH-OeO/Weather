@@ -1,11 +1,12 @@
 import React from "react";
 import { useState, useEffect, useRef } from "react";
-import Container from "react-bootstrap/Container";
-import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
+import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
+import Snackbar from "@mui/material/Snackbar";
+import LinearProgress from "@mui/material/LinearProgress";
 import styled from "styled-components";
 import Current from "./pages/current";
 import Hourly from "./pages/hourly";
@@ -13,18 +14,27 @@ import Daily from "./pages/daily";
 import FetchData from "./api/fetchData";
 import FetchLocation from "./api/fetchLocation";
 import FetchGeo from "./api/fetchGeo";
-const Footer = styled.div`
+import Footer from "./pages/footer";
+
+const Title = styled.div`
+  font-size: 1.5em;
+  color: #3f51b5;
+  user-select: none;
   display: flex;
   justify-content: center;
   align-items: center;
-  opacity: 0.5;
-  text-decoration: none;
-  margin: auto;
+  padding-top: 1rem;
 `;
+const Search = styled.div`
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+`;
+
 function App() {
   const [weatherData, setWeatherData] = useState("");
   const [cityName, setCityName] = useState("");
   const [location, setLocation] = useState("");
+  const [toast, setToast] = useState(true);
   const currentRef = useRef();
   const hourlyRef = useRef();
   const dailyRef = useRef();
@@ -81,71 +91,52 @@ function App() {
   };
 
   return (
-    <Container>
-      <Navbar bg="light" sticky="top">
-        <Nav>
-          <Nav.Link
-            onClick={() =>
-              currentRef.current.scrollIntoView({
-                behavior: "smooth",
-              })
-            }
-          >
-            Current
-          </Nav.Link>
-          <Nav.Link
-            onClick={() =>
-              hourlyRef.current.scrollIntoView({ behavior: "smooth" })
-            }
-          >
-            Hourly
-          </Nav.Link>
-          <Nav.Link
-            onClick={() =>
-              dailyRef.current.scrollIntoView({ behavior: "smooth" })
-            }
-          >
-            Daily
-          </Nav.Link>
-        </Nav>
-      </Navbar>
+    <>
+      {weatherData && cityName ? (
+        <Container>
+          {cityName && (
+            <Title>
+              <Typography variant="h4">{cityName.data.display_name}</Typography>
+              <Search>
+                <TextField
+                  label="search"
+                  variant="outlined"
+                  value={location}
+                  size="small"
+                  onChange={(e) => {
+                    setLocation(e.target.value);
+                  }}
+                />
+                <IconButton onClick={handleClick} color="primary">
+                  <SearchOutlinedIcon />
+                </IconButton>
+              </Search>
+            </Title>
+          )}
 
-      <TextField
-        label="search"
-        variant="standard"
-        value={location}
-        onChange={(e) => {
-          setLocation(e.target.value);
-        }}
-      />
-      <p>地點: {location} </p>
-      <Button
-        variant="outlined"
-        onClick={handleClick}
-        startIcon={<SearchOutlinedIcon />}
-      >
-        {" "}
-        Search
-      </Button>
-      <div ref={currentRef}>
-        <Current data={weatherData} city={cityName} />
-      </div>
-      <div ref={hourlyRef}>
-        <Hourly data={weatherData} city={cityName} />
-      </div>
-      <div ref={dailyRef}>
-        <Daily data={weatherData} city={cityName} />
-      </div>
-
-      <Footer>
-        <a
-          href="https://github.com/LeeCH-OeO/Weather"
-          style={{ textDecoration: "none" }}
-        >
-          Copyright © ChiHsuan-Lee
-        </a>
-      </Footer>
-    </Container>
+          <div ref={currentRef}>
+            <Current data={weatherData} />
+          </div>
+          <div ref={hourlyRef}>
+            <Hourly data={weatherData} />
+          </div>
+          <div ref={dailyRef}>
+            <Daily data={weatherData} />
+          </div>
+          <Snackbar
+            open={toast}
+            autoHideDuration={5000}
+            message="Click each section for more information!"
+            onClose={() => {
+              setToast(false);
+            }}
+          />
+          <Footer />
+        </Container>
+      ) : (
+        <LinearProgress />
+      )}
+    </>
   );
 }
 

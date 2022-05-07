@@ -3,46 +3,43 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import CardActions from "@mui/material/CardActions";
-import { Button } from "@mui/material";
+import { CardActionArea, Paper, Typography } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 
-const convertDate = (date, offset) => {
-  const d = new Date((date + offset) * 1000);
-  return d.toISOString().substring(11, 16);
-};
 const Description = styled.p`
   user-select: none;
-  font-size: 2em;
+  font-size: 2.5rem;
   display: inline;
   user-select: none;
+  font-family: "Roboto";
 `;
-const CityTitle = styled.h1`
-  font-size: 1.5em;
-  color: palevioletred;
-  user-select: none;
+const MainContainer = styled.div`
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
-function Current({ data, city }) {
+function Current({ data }) {
   const [clicked, setClicked] = useState(false);
   return (
-    <>
-      {city && data && (
-        <Card sx={{ maxWidth: 345 }}>
+    <MainContainer>
+      <Card sx={{ maxWidth: 345 }} variant="outlined">
+        <CardActionArea onClick={() => setClicked(!clicked)}>
           <CardContent>
-            <CityTitle>
-              Current Weather{" "}
-              {convertDate(data.current.dt, data.timezone_offset)}
-            </CityTitle>
+            <Typography variant="h6">Current Weather</Typography>
             <Description>{data.current.temp}℃</Description>
             <img
               src={`https://openweathermap.org/img/wn/${data.current.weather[0].icon}@2x.png`}
             />
-            <br /> {data.current.weather[0].description}
+            <br />
+            <Typography variant="subtitle1">
+              {data.current.weather[0].description}
+            </Typography>
             {clicked && (
               <TableContainer>
                 <Table>
@@ -59,12 +56,7 @@ function Current({ data, city }) {
                         {data.current.feels_like}℃
                       </TableCell>
                     </TableRow>
-                    <TableRow>
-                      <TableCell>Cloudiness</TableCell>
-                      <TableCell align="right">
-                        {data.current.clouds}%
-                      </TableCell>
-                    </TableRow>
+
                     <TableRow>
                       <TableCell>Visibility</TableCell>
                       <TableCell align="right">
@@ -82,14 +74,9 @@ function Current({ data, city }) {
               </TableContainer>
             )}
           </CardContent>
-          <CardActions>
-            <Button onClick={() => setClicked(!clicked)}>
-              {clicked ? "close" : "details"}
-            </Button>
-          </CardActions>
-        </Card>
-      )}
-    </>
+        </CardActionArea>
+      </Card>
+    </MainContainer>
   );
 }
 
