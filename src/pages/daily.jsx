@@ -73,15 +73,15 @@ function Daily({ data }) {
                       <TableRow key={result.dt}>
                         <TableCell>{result.temp.date}</TableCell>
                         <TableCell align="right">
-                          {result.weather[0].description}{" "}
+                          {result.weather[0].description}
                         </TableCell>
                         <TableCell align="right">
-                          day: {result.temp.day}℃<br />
-                          night: {result.temp.night}℃
+                          day: {result.temp.day.toFixed(2)}℃<br />
+                          night: {result.temp.night.toFixed(2)}℃
                         </TableCell>
                         <TableCell align="right">
-                          day: {result.feels_like.day}℃ <br />
-                          night: {result.feels_like.night}℃
+                          day: {result.feels_like.day.toFixed(2)}℃ <br />
+                          night: {result.feels_like.night.toFixed(2)}℃
                         </TableCell>
                         <TableCell align="right">
                           {Math.round(result.pop * 100)}%

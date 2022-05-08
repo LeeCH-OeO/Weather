@@ -72,11 +72,13 @@ function Hourly({ data }) {
                       <TableRow key={result.dt}>
                         <TableCell>{result.date}</TableCell>
                         <TableCell align="right">
-                          {result.weather[0].description}{" "}
+                          {result.weather[0].description}
                         </TableCell>
-                        <TableCell align="right">{result.temp}℃</TableCell>
                         <TableCell align="right">
-                          {result.feels_like}℃
+                          {result.temp.toFixed(2)}℃
+                        </TableCell>
+                        <TableCell align="right">
+                          {result.feels_like.toFixed(2)}℃
                         </TableCell>
                         <TableCell align="right">
                           {Math.round(result.pop * 100)}%

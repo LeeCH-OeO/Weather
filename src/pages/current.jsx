@@ -36,7 +36,7 @@ function Current({ data }) {
         <CardContent>
           <Typography variant="h6">Current Weather</Typography>
           <Description>
-            {data.current.temp}℃
+            {data.current.temp.toFixed(2)}℃
             <img
               src={`https://openweathermap.org/img/wn/${data.current.weather[0].icon}@2x.png`}
               alt={data.current.weather[0].description}
@@ -65,7 +65,7 @@ function Current({ data }) {
                   <TableRow>
                     <TableCell>Feels like</TableCell>
                     <TableCell align="right">
-                      {data.current.feels_like}℃
+                      {data.current.feels_like.toFixed(2)}℃
                     </TableCell>
                   </TableRow>
 
