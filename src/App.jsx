@@ -7,6 +7,8 @@ import IconButton from "@mui/material/IconButton";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import LinearProgress from "@mui/material/LinearProgress";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
+import SaveIcon from "@mui/icons-material/Save";
+
 import styled from "styled-components";
 import Current from "./pages/current";
 import Hourly from "./pages/hourly";
@@ -32,11 +34,11 @@ const Search = styled.div`
 function App() {
   const [weatherData, setWeatherData] = useState("");
   const [cityName, setCityName] = useState("");
-  const [location, setLocation] = useState("");
-
-  const currentRef = useRef();
-  const hourlyRef = useRef();
-  const dailyRef = useRef();
+  const [inputLocation, setInputLocation] = useState("");
+  const [currrentGeo, setCurrentGeo] = useState({
+    latitude: "",
+    longitude: "",
+  });
 
   useEffect(() => {
     defaultlocation();
@@ -60,20 +62,38 @@ function App() {
     );
     setWeatherData(data);
     setCityName(location);
+    setCurrentGeo((currrentGeo) => ({
+      ...currrentGeo,
+      latitude: position.coords.latitude,
+      longitude: position.coords.longitude,
+    }));
   };
   const defaultlocation = async () => {
-    const data = await FetchData(25.009172597250643, 121.52027756547784);
-    const location = await FetchLocation(
-      25.009172597250643,
-      121.52027756547784
-    );
-    setWeatherData(data);
-    setCityName(location);
+    if (JSON.parse(localStorage.getItem("location")) != null) {
+      const data = await FetchData(
+        JSON.parse(localStorage.getItem("location")).latitude,
+        JSON.parse(localStorage.getItem("location")).longitude
+      );
+      const location = await FetchLocation(
+        JSON.parse(localStorage.getItem("location")).latitude,
+        JSON.parse(localStorage.getItem("location")).longitude
+      );
+      setWeatherData(data);
+      setCityName(location);
+    } else {
+      const data = await FetchData(25.009172597250643, 121.52027756547784);
+      const location = await FetchLocation(
+        25.009172597250643,
+        121.52027756547784
+      );
+      setWeatherData(data);
+      setCityName(location);
+    }
   };
   const handleClick = () => {
-    if (location) {
-      getGeoByInput(location);
-      setLocation("");
+    if (inputLocation) {
+      getGeoByInput(inputLocation);
+      setInputLocation("");
     } else {
       alert("請輸入");
     }
@@ -85,7 +105,13 @@ function App() {
       const location = await FetchLocation(res.data[0].lat, res.data[0].lon);
       setWeatherData(data);
       setCityName(location);
+      setCurrentGeo((currrentGeo) => ({
+        ...currrentGeo,
+        latitude: res.data[0].lat,
+        longitude: res.data[0].lon,
+      }));
     } catch (error) {
+      console.log(error);
       alert("location not found!");
     }
   };
@@ -95,16 +121,20 @@ function App() {
       {weatherData && cityName ? (
         <Container>
           {cityName && (
-            <Title>
-              <Typography variant="h5">{cityName.data.display_name}</Typography>
-              <Search>
+            <>
+              <Title>
+                <Typography variant="h5">
+                  {cityName.data.display_name}
+                </Typography>
+              </Title>
+              <Title>
                 <TextField
                   label="Search"
                   variant="outlined"
-                  value={location}
+                  value={inputLocation}
                   size="small"
                   onChange={(e) => {
-                    setLocation(e.target.value);
+                    setInputLocation(e.target.value);
                   }}
                 />
                 <IconButton onClick={handleClick} color="primary">
@@ -113,19 +143,35 @@ function App() {
                 <IconButton onClick={getLocation} color="secondary">
                   <LocationOnIcon />
                 </IconButton>
-              </Search>
-            </Title>
+                <IconButton
+                  color="info"
+                  onClick={() => {
+                    if (currrentGeo.latitude && currrentGeo) {
+                      localStorage.setItem(
+                        "location",
+                        JSON.stringify(currrentGeo)
+                      );
+                      alert(
+                        "Set " +
+                          cityName.data.display_name +
+                          " as default location!"
+                      );
+                    } else {
+                      alert("error");
+                    }
+                  }}
+                >
+                  <SaveIcon />
+                </IconButton>
+              </Title>
+            </>
           )}
 
-          <div ref={currentRef}>
-            <Current data={weatherData} />
-          </div>
-          <div ref={hourlyRef}>
-            <Hourly data={weatherData} />
-          </div>
-          <div ref={dailyRef}>
-            <Daily data={weatherData} />
-          </div>
+          <Current data={weatherData} />
+
+          <Hourly data={weatherData} />
+
+          <Daily data={weatherData} />
 
           <Footer />
         </Container>
