@@ -15,7 +15,7 @@ function HourlyChart({ data }) {
       <ResponsiveContainer width="100%" height={250}>
         <LineChart data={data}>
           <YAxis />
-          <XAxis dataKey="date" />
+          <XAxis dataKey="date" padding={{ left: 10, right: 10 }} />
           <Tooltip />
           <Legend verticalAlign="top" height={50} />
           <Line
