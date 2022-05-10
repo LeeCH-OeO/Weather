@@ -6,6 +6,7 @@ import TextField from "@mui/material/TextField";
 import IconButton from "@mui/material/IconButton";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import LinearProgress from "@mui/material/LinearProgress";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
 import styled from "styled-components";
 import Current from "./pages/current";
 import Hourly from "./pages/hourly";
@@ -38,8 +39,9 @@ function App() {
   const dailyRef = useRef();
 
   useEffect(() => {
-    getLocation();
+    defaultlocation();
   }, []);
+
   const getLocation = async () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(locationData, defaultlocation);
@@ -78,11 +80,13 @@ function App() {
   };
   const getGeoByInput = async (input) => {
     const res = await FetchGeo(input);
-    if (res.data[0]) {
+    try {
       const data = await FetchData(res.data[0].lat, res.data[0].lon);
       const location = await FetchLocation(res.data[0].lat, res.data[0].lon);
       setWeatherData(data);
       setCityName(location);
+    } catch (error) {
+      alert("location not found!");
     }
   };
 
@@ -105,6 +109,9 @@ function App() {
                 />
                 <IconButton onClick={handleClick} color="primary">
                   <SearchOutlinedIcon />
+                </IconButton>
+                <IconButton onClick={getLocation} color="secondary">
+                  <LocationOnIcon />
                 </IconButton>
               </Search>
             </Title>
