@@ -8,6 +8,7 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import LinearProgress from "@mui/material/LinearProgress";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import SaveIcon from "@mui/icons-material/Save";
+import Snackbar from "@mui/material/Snackbar";
 
 import styled from "styled-components";
 import Current from "./pages/current";
@@ -26,10 +27,6 @@ const Title = styled.div`
   align-items: center;
   padding-top: 1rem;
 `;
-const Search = styled.div`
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
-`;
 
 function App() {
   const [weatherData, setWeatherData] = useState("");
@@ -39,6 +36,8 @@ function App() {
     latitude: "",
     longitude: "",
   });
+  const [saveToast, setSaveToast] = useState(false);
+  const [defaultToast, setDefaultToast] = useState(false);
 
   useEffect(() => {
     defaultlocation();
@@ -88,6 +87,7 @@ function App() {
       );
       setWeatherData(data);
       setCityName(location);
+      setDefaultToast(true);
     }
   };
   const handleClick = () => {
@@ -120,52 +120,60 @@ function App() {
     <>
       {weatherData && cityName ? (
         <Container>
-          {cityName && (
-            <>
-              <Title>
-                <Typography variant="h5">
-                  {cityName.data.display_name}
-                </Typography>
-              </Title>
-              <Title>
-                <TextField
-                  label="Search"
-                  variant="outlined"
-                  value={inputLocation}
-                  size="small"
-                  onChange={(e) => {
-                    setInputLocation(e.target.value);
-                  }}
-                />
-                <IconButton onClick={handleClick} color="primary">
-                  <SearchOutlinedIcon />
-                </IconButton>
-                <IconButton onClick={getLocation} color="secondary">
-                  <LocationOnIcon />
-                </IconButton>
-                <IconButton
-                  color="info"
-                  onClick={() => {
-                    if (currrentGeo.latitude && currrentGeo) {
-                      localStorage.setItem(
-                        "location",
-                        JSON.stringify(currrentGeo)
-                      );
-                      alert(
-                        "Set " +
-                          cityName.data.display_name +
-                          " as default location!"
-                      );
-                    } else {
-                      alert("error");
-                    }
-                  }}
-                >
-                  <SaveIcon />
-                </IconButton>
-              </Title>
-            </>
-          )}
+          <Title>
+            <Typography variant="h5">{cityName.data.display_name}</Typography>
+          </Title>
+          <Title>
+            <TextField
+              label="Search"
+              variant="outlined"
+              value={inputLocation}
+              size="small"
+              onChange={(e) => {
+                setInputLocation(e.target.value);
+              }}
+            />
+            <IconButton
+              onClick={handleClick}
+              color="primary"
+              disabled={inputLocation ? false : true}
+            >
+              <SearchOutlinedIcon />
+            </IconButton>
+            <IconButton onClick={getLocation} color="secondary">
+              <LocationOnIcon />
+            </IconButton>
+            <IconButton
+              disabled={
+                currrentGeo.latitude && currrentGeo.longitude ? false : true
+              }
+              color="info"
+              onClick={() => {
+                if (currrentGeo.latitude && currrentGeo) {
+                  localStorage.setItem("location", JSON.stringify(currrentGeo));
+
+                  setCurrentGeo((currrentGeo) => ({
+                    ...currrentGeo,
+                    latitude: "",
+                    longitude: "",
+                  }));
+                  setSaveToast(true);
+                } else {
+                  alert("error");
+                }
+              }}
+            >
+              <SaveIcon />
+            </IconButton>
+          </Title>
+          <Snackbar
+            open={saveToast}
+            autoHideDuration={5000}
+            onClose={() => setSaveToast(false)}
+            message={
+              "Set " + cityName.data.display_name + " as default location!"
+            }
+          />
 
           <Current data={weatherData} />
 
