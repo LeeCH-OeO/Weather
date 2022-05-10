@@ -37,7 +37,6 @@ function App() {
     longitude: "",
   });
   const [saveToast, setSaveToast] = useState(false);
-  const [defaultToast, setDefaultToast] = useState(false);
 
   useEffect(() => {
     defaultlocation();
@@ -87,7 +86,6 @@ function App() {
       );
       setWeatherData(data);
       setCityName(location);
-      setDefaultToast(true);
     }
   };
   const handleClick = () => {
