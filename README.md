@@ -23,4 +23,5 @@ Place your openWeather api under `src/api/ApiKey`
 
 [React](https://reactjs.org/)  
 [Recharts](https://recharts.org/)  
-[styled-components](https://styled-components.com/)
+[styled-components](https://styled-components.com/)  
+[Material UI](https://mui.com/)
