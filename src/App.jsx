@@ -44,6 +44,9 @@ function App() {
 
   const getLocation = async () => {
     if (navigator.geolocation) {
+      setCityName("");
+      setWeatherData("");
+      setSaveToast(false);
       navigator.geolocation.getCurrentPosition(locationData, defaultlocation);
     } else {
       alert("Geolocation is not supported by this browser.");
@@ -90,6 +93,9 @@ function App() {
   };
   const handleClick = () => {
     if (inputLocation) {
+      setCityName("");
+      setWeatherData("");
+      setSaveToast(false);
       getGeoByInput(inputLocation);
       setInputLocation("");
     } else {
@@ -111,6 +117,7 @@ function App() {
     } catch (error) {
       console.log(error);
       alert("location not found!");
+      location.reload();
     }
   };
 
@@ -147,7 +154,7 @@ function App() {
               }
               color="info"
               onClick={() => {
-                if (currrentGeo.latitude && currrentGeo) {
+                if (currrentGeo.latitude && currrentGeo.longitude) {
                   localStorage.setItem("location", JSON.stringify(currrentGeo));
 
                   setCurrentGeo((currrentGeo) => ({
@@ -173,7 +180,11 @@ function App() {
             }
           />
 
-          <Current data={weatherData} />
+          {weatherData && cityName ? (
+            <Current data={weatherData} />
+          ) : (
+            <LinearProgress />
+          )}
 
           <Hourly data={weatherData} />
 
