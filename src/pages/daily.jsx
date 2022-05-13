@@ -35,7 +35,7 @@ function Daily({ data }) {
   const [clicked, setClicked] = useState(false);
   {
     data &&
-      data.daily.map((result) => {
+      data.daily.forEach((result) => {
         result.temp.date = convertDate(result.dt, data.timezone_offset);
         temp.push(result.temp);
       });

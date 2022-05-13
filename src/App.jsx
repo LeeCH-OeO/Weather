@@ -181,14 +181,14 @@ function App() {
           />
 
           {weatherData && cityName ? (
-            <Current data={weatherData} />
+            <>
+              <Current data={weatherData} />
+              <Hourly data={weatherData} />
+              <Daily data={weatherData} />
+            </>
           ) : (
             <LinearProgress />
           )}
-
-          <Hourly data={weatherData} />
-
-          <Daily data={weatherData} />
 
           <Footer />
         </Container>
