@@ -28,7 +28,7 @@ const MainContainer = styled.div`
   justify-content: center;
   align-items: center;
 `;
-function Current({ data }) {
+function Current({ data, aqi }) {
   const [clicked, setClicked] = useState(false);
   return (
     <MainContainer>
@@ -47,6 +47,8 @@ function Current({ data }) {
           <Typography variant="subtitle1">
             {data.current.weather[0].description}
           </Typography>
+          <Typography variant="subtitle1">AQI: {aqi.data.aqi}</Typography>
+
           <CardActions>
             <Button onClick={() => setClicked(!clicked)}>
               {clicked ? "close" : "detail"}

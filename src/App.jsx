@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
@@ -14,9 +14,10 @@ import styled from "styled-components";
 import Current from "./pages/current";
 import Hourly from "./pages/hourly";
 import Daily from "./pages/daily";
-import FetchData from "./api/fetchData";
+import FetchWeatherData from "./api/fetchWeatherData";
 import FetchLocation from "./api/fetchLocation";
 import FetchGeo from "./api/fetchGeo";
+import FetchAqiData from "./api/fetchAqiData";
 import Footer from "./pages/footer";
 
 const Title = styled.div`
@@ -32,6 +33,7 @@ function App() {
   const [weatherData, setWeatherData] = useState("");
   const [cityName, setCityName] = useState("");
   const [inputLocation, setInputLocation] = useState("");
+  const [aqi, setAqi] = useState("");
   const [currrentGeo, setCurrentGeo] = useState({
     latitude: "",
     longitude: "",
@@ -46,6 +48,7 @@ function App() {
     if (navigator.geolocation) {
       setCityName("");
       setWeatherData("");
+      setAqi("");
       setSaveToast(false);
       navigator.geolocation.getCurrentPosition(locationData, defaultlocation);
     } else {
@@ -53,7 +56,7 @@ function App() {
     }
   };
   const locationData = async (position) => {
-    const data = await FetchData(
+    const data = await FetchWeatherData(
       position.coords.latitude,
       position.coords.longitude
     );
@@ -61,8 +64,13 @@ function App() {
       position.coords.latitude,
       position.coords.longitude
     );
+    const aqi = await FetchAqiData(
+      position.coords.latitude,
+      position.coords.longitude
+    );
     setWeatherData(data);
     setCityName(location);
+    setAqi(aqi);
     setCurrentGeo((currrentGeo) => ({
       ...currrentGeo,
       latitude: position.coords.latitude,
@@ -71,7 +79,7 @@ function App() {
   };
   const defaultlocation = async () => {
     if (JSON.parse(localStorage.getItem("location")) != null) {
-      const data = await FetchData(
+      const data = await FetchWeatherData(
         JSON.parse(localStorage.getItem("location")).latitude,
         JSON.parse(localStorage.getItem("location")).longitude
       );
@@ -79,16 +87,26 @@ function App() {
         JSON.parse(localStorage.getItem("location")).latitude,
         JSON.parse(localStorage.getItem("location")).longitude
       );
+      const aqi = await FetchAqiData(
+        JSON.parse(localStorage.getItem("location")).latitude,
+        JSON.parse(localStorage.getItem("location")).longitude
+      );
       setWeatherData(data);
       setCityName(location);
+      setAqi(aqi);
     } else {
-      const data = await FetchData(25.009172597250643, 121.52027756547784);
+      const data = await FetchWeatherData(
+        25.009172597250643,
+        121.52027756547784
+      );
       const location = await FetchLocation(
         25.009172597250643,
         121.52027756547784
       );
+      const aqi = await FetchAqiData(25.009172597250643, 121.52027756547784);
       setWeatherData(data);
       setCityName(location);
+      setAqi(aqi);
     }
   };
   const handleClick = () => {
@@ -105,8 +123,9 @@ function App() {
   const getGeoByInput = async (input) => {
     const res = await FetchGeo(input);
     try {
-      const data = await FetchData(res.data[0].lat, res.data[0].lon);
+      const data = await FetchWeatherData(res.data[0].lat, res.data[0].lon);
       const location = await FetchLocation(res.data[0].lat, res.data[0].lon);
+      const aqi = await FetchAqiData(res.data[0].lat, res.data[0].lon);
       setWeatherData(data);
       setCityName(location);
       setCurrentGeo((currrentGeo) => ({
@@ -114,6 +133,7 @@ function App() {
         latitude: res.data[0].lat,
         longitude: res.data[0].lon,
       }));
+      setAqi(aqi);
     } catch (error) {
       console.log(error);
       alert("location not found!");
@@ -123,7 +143,7 @@ function App() {
 
   return (
     <>
-      {weatherData && cityName ? (
+      {weatherData && cityName && aqi ? (
         <Container>
           <Title>
             <Typography variant="h5">{cityName.data.display_name}</Typography>
@@ -182,7 +202,7 @@ function App() {
 
           {weatherData && cityName ? (
             <>
-              <Current data={weatherData} />
+              <Current data={weatherData} aqi={aqi} />
               <Hourly data={weatherData} />
               <Daily data={weatherData} />
             </>

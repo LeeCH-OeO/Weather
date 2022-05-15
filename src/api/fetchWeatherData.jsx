@@ -2,7 +2,7 @@ import axios from "axios";
 import { ApiKey } from "./ApiKey";
 const URL = "https://api.openweathermap.org/data/2.5/onecall";
 const api = ApiKey;
-const FetchData = async (latitude, longitude) => {
+const FetchWeatherData = async (latitude, longitude) => {
   const { data } = await axios.get(URL, {
     params: {
       lat: latitude,
@@ -14,4 +14,4 @@ const FetchData = async (latitude, longitude) => {
 
   return data;
 };
-export default FetchData;
+export default FetchWeatherData;
