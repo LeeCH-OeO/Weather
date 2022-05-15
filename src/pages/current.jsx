@@ -30,6 +30,7 @@ const MainContainer = styled.div`
 `;
 function Current({ data, aqi }) {
   const [clicked, setClicked] = useState(false);
+
   return (
     <MainContainer>
       <Card sx={{ maxWidth: 345 }} variant="outlined">
@@ -47,7 +48,6 @@ function Current({ data, aqi }) {
           <Typography variant="subtitle1">
             {data.current.weather[0].description}
           </Typography>
-          <Typography variant="subtitle1">AQI: {aqi.data.aqi}</Typography>
 
           <CardActions>
             <Button onClick={() => setClicked(!clicked)}>
@@ -81,6 +81,12 @@ function Current({ data, aqi }) {
                     <TableCell>Wind speed</TableCell>
                     <TableCell align="right">
                       {data.current.wind_speed} m/h
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>Air Quality </TableCell>
+                    <TableCell align="right">
+                      {aqi.data.description} ({aqi.data.aqi})
                     </TableCell>
                   </TableRow>
                 </TableBody>
