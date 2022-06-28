@@ -1,6 +1,6 @@
 import { Typography } from "@mui/material";
 import styled from "styled-components";
-
+import React from "react";
 const MainContainer = styled.div`
   display: flex;
   justify-content: center;

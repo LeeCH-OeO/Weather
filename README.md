@@ -18,7 +18,7 @@ Place your openWeather api under `src/api/ApiKey`
 
 [OpenWeather](https://openweathermap.org/)  
 [Nominatim](https://nominatim.org/)
-
+[World Air Quality Index](https://aqicn.org/)
 ## dependencies
 
 [React](https://reactjs.org/)  
