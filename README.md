@@ -17,7 +17,7 @@ Place your openWeather api under `src/api/ApiKey`
 ## 資料來源
 
 [OpenWeather](https://openweathermap.org/)  
-[Nominatim](https://nominatim.org/)
+[Nominatim](https://nominatim.org/)   
 [World Air Quality Index](https://aqicn.org/)
 ## dependencies
 
