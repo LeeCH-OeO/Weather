@@ -30,13 +30,15 @@ const MainContainer = styled.div`
 `;
 const Alerts = styled.div`
   color: red;
+  cursor: pointer;
 `;
 function Current({ data, aqi }) {
   const [clicked, setClicked] = useState(false);
+  const [alertClicked, setAlertClicked] = useState(false);
 
   return (
     <MainContainer>
-      <Card sx={{ maxWidth: 345 }} variant="outlined">
+      <Card variant="outlined">
         <CardContent>
           <Description>
             {data.current.temp.toFixed(2)}℃
@@ -53,8 +55,11 @@ function Current({ data, aqi }) {
           {data.alerts &&
             data.alerts.map((result) => {
               return (
-                <Alerts>
-                  <Typography variant="h6">⚠️{result.event} </Typography>
+                <Alerts onClick={() => setAlertClicked(!alertClicked)}>
+                  <Typography variant="h6">⚠️{result.event}</Typography>
+                  <Typography variant="h6">
+                    {alertClicked && result.description}
+                  </Typography>
                 </Alerts>
               );
             })}
