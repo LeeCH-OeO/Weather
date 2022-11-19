@@ -28,6 +28,9 @@ const MainContainer = styled.div`
   justify-content: center;
   align-items: center;
 `;
+const Alerts = styled.div`
+  color: red;
+`;
 function Current({ data, aqi }) {
   const [clicked, setClicked] = useState(false);
 
@@ -35,7 +38,6 @@ function Current({ data, aqi }) {
     <MainContainer>
       <Card sx={{ maxWidth: 345 }} variant="outlined">
         <CardContent>
-          <Typography variant="h6">Current Weather</Typography>
           <Description>
             {data.current.temp.toFixed(2)}℃
             <img
@@ -48,6 +50,14 @@ function Current({ data, aqi }) {
           <Typography variant="subtitle1">
             {data.current.weather[0].description}
           </Typography>
+          {data.alerts &&
+            data.alerts.map((result) => {
+              return (
+                <Alerts>
+                  <Typography variant="h6">⚠️{result.event} </Typography>
+                </Alerts>
+              );
+            })}
 
           <CardActions>
             <Button onClick={() => setClicked(!clicked)}>
