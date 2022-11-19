@@ -17,7 +17,7 @@ function Footer() {
           href="https://github.com/LeeCH-OeO/Weather"
           style={{ textDecoration: "none" }}
         >
-          © 2022 ChiHsuan-Lee
+          © 2022 Chi-Hsuan Lee
         </a>
       </Typography>
     </MainContainer>
