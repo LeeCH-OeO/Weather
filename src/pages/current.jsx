@@ -58,7 +58,8 @@ function Current({ data, aqi }) {
                 <Alerts onClick={() => setAlertClicked(!alertClicked)}>
                   <Typography variant="h6">⚠️{result.event}</Typography>
                   <Typography variant="h6">
-                    {alertClicked && result.description}
+                    {alertClicked &&
+                      `${result.description} – Issued by ${result.sender_name}`}
                   </Typography>
                 </Alerts>
               );
