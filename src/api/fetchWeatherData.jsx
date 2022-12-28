@@ -1,7 +1,6 @@
 import axios from "axios";
-import { ApiKey } from "./ApiKey";
 const URL = "https://api.openweathermap.org/data/2.5/onecall";
-const api = ApiKey;
+const api = import.meta.env.VITE_WEATHER_API;
 const FetchWeatherData = async (latitude, longitude) => {
   const { data } = await axios.get(URL, {
     params: {

@@ -12,13 +12,14 @@ Weather Application build with ReactJS
 
 ## API
 
-Place your openWeather api under `src/api/ApiKey`
+Place your openWeather api in `/.env`
 
 ## 資料來源
 
 [OpenWeather](https://openweathermap.org/)  
-[Nominatim](https://nominatim.org/)   
+[Nominatim](https://nominatim.org/)  
 [World Air Quality Index](https://aqicn.org/)
+
 ## dependencies
 
 [React](https://reactjs.org/)  

@@ -56,7 +56,7 @@ function Current({ data, aqi }) {
             data.alerts.map((result) => {
               return (
                 <Alerts onClick={() => setAlertClicked(!alertClicked)}>
-                  <Typography variant="h6">⚠️{result.event}</Typography>
+                  <Typography variant="h5">⚠️{result.event}</Typography>
                   <Typography variant="h6">
                     {alertClicked &&
                       `${result.description} – Issued by ${result.sender_name}`}

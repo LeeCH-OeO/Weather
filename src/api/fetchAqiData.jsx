@@ -1,7 +1,6 @@
 import axios from "axios";
-import { AqiKey } from "./ApiKey";
 const URL = "https://api.waqi.info/feed/geo";
-const api = AqiKey;
+const api = import.meta.env.VITE_AQI_API;
 const FetchAqiData = async (latitude, longitude) => {
   const { data } = await axios.get(
     `${URL}:${latitude};${longitude}/?token=${api}`

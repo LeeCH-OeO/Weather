@@ -39,7 +39,6 @@ function App() {
     longitude: "",
   });
   const [saveToast, setSaveToast] = useState(false);
-
   useEffect(() => {
     defaultlocation();
   }, []);
@@ -146,7 +145,7 @@ function App() {
       {weatherData && cityName && aqi ? (
         <Container>
           <Title>
-            <Typography variant="h5">{cityName.data.display_name}</Typography>
+            <Typography variant="h4">{cityName.data.display_name}</Typography>
           </Title>
           <Title>
             <TextField

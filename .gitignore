@@ -27,3 +27,4 @@ src/api/ApiKey.jsx
 firebase.json
 .firebase/
 vite.config.js
+.env
