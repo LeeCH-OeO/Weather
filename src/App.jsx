@@ -94,6 +94,9 @@ function App() {
       setCityName(location);
       setAqi(aqi);
     } else {
+      alert(
+        "The weather at the default is being displayed. Click 📍 to search current location and 💾 to set default location"
+      );
       const data = await FetchWeatherData(
         25.009172597250643,
         121.52027756547784
