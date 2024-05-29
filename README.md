@@ -1,5 +1,3 @@
-# [Weather Web APP](https://weather.chihsuan-lee.dev/)
-
 Weather Application build with ReactJS
 
 ## install
