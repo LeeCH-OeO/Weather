@@ -255,16 +255,16 @@ function App() {
   const dailyRows =
     weatherData?.daily?.slice(0, 7).map((row) => {
       const d = fmtDate(row.dt, weatherData.timezone_offset).slice(0, 10);
-      return `${pad(d, 12)} day:${pad(`${row.temp.day.toFixed(1)}C`, 8)} night:${pad(
+      return `${pad(d, 12)} ${pad(`${row.temp.day.toFixed(1)}C`, 8)} ${pad(
         `${row.temp.night.toFixed(1)}C`,
         8,
-      )} rain:${pad(`${Math.round(row.pop * 100)}%`, 6)} sum:${pad(
+      )} ${pad(`${Math.round(row.pop * 100)}%`, 6)} ${pad(
         `${row.precip_sum.toFixed(1)}mm`,
         8,
-      )} uv:${pad(String(row.uv_index_max ?? "-"), 5)} sr:${pad(
+      )} ${pad(String(row.uv_index_max ?? "-"), 5)} ${pad(
         fmtTime(row.sunrise, weatherData.timezone_offset),
         9,
-      )} ss:${pad(fmtTime(row.sunset, weatherData.timezone_offset), 9)} ${row.weather[0].description}`;
+      )} ${pad(fmtTime(row.sunset, weatherData.timezone_offset), 9)} ${row.weather[0].description}`;
     }) || [];
 
   const nowRows =
@@ -491,7 +491,7 @@ ${hourlyRows.join("\n")}`}</pre>
                     transition={{ ...blockMotion.transition, delay: 0.1 }}
                   >
                     <h2>[DAILY_7]</h2>
-                    <pre>{`date         day temp  night    rain   sum     uv    sr        ss        weather
+                    <pre>{`date         day      night    rain   sum      uv    sr        ss        weather
 ${dailyRows.join("\n")}`}</pre>
                   </motion.section>
 
