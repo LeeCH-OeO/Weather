@@ -22,15 +22,45 @@ npm run build
 npm run preview
 ```
 
-## Deploy to Cloudflare Pages
+## Local Development (No Deploy)
 
-1. Push this repo to GitHub/GitLab.
-2. In Cloudflare Dashboard: `Workers & Pages` -> `Create` -> `Pages` -> `Connect to Git`.
-3. Use these build settings:
-   - Build command: `npm run build`
-   - Build output directory: `dist`
-   - Node version: `20`
-4. Deploy.
+Run app-only dev server:
+
+```bash
+npm install
+npm run dev
+```
+
+Open: `http://localhost:5173`
+
+Notes:
+- In plain Vite dev, Cloudflare `request.cf` is not available.
+- The app will fallback from `/api/network-location` to public IP geolocation providers.
+
+Run Worker-like local dev (closer to production):
+
+```bash
+npm run build
+npx wrangler dev
+```
+
+## Deploy with Cloudflare Workers (Static Assets + API)
+
+This repo is configured as a Worker that:
+- serves static files from `dist/`
+- exposes `/api/network-location` using Cloudflare `request.cf` geolocation
+
+Deploy:
+
+```bash
+npm run build
+npx wrangler deploy
+```
+
+`wrangler.jsonc` uses:
+- `main: src/worker.js`
+- `assets.directory: ./dist`
+- `assets.binding: ASSETS`
 
 ## Data Sources
 

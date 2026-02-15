@@ -324,14 +324,26 @@ function App() {
                     if (e.key === "Enter") void handleSearch();
                   }}
                 />
-                <button type="button" onClick={handleSearch}>
-                  run
+                <button
+                  type="button"
+                  onClick={handleSearch}
+                  title="Search weather by city name"
+                >
+                  Search City
                 </button>
-                <button type="button" onClick={handleDeviceLocation}>
-                  device
+                <button
+                  type="button"
+                  onClick={handleDeviceLocation}
+                  title="Use your browser/device geolocation for current weather"
+                >
+                  Use My Location
                 </button>
-                <button type="button" onClick={handleSaveDefault}>
-                  save-default
+                <button
+                  type="button"
+                  onClick={handleSaveDefault}
+                  title="Save the current location as your default startup location"
+                >
+                  Save As Default
                 </button>
               </div>
 
@@ -409,7 +421,7 @@ openstreetmap: ${mapUrl}`}</pre>
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.35, delay: 0.2 }}
               >
-                <span>weather-cli v2</span>
+                <span>weather-oeo</span>
                 <span>{new Date().getFullYear()} terminal mode</span>
                 <a
                   href="https://open-meteo.com/"

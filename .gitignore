@@ -1,5 +1,12 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+dist-ssr/
+
 # Logs
-logs
+logs/
 *.log
 npm-debug.log*
 yarn-debug.log*
@@ -7,21 +14,24 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
+# Local env and machine-specific files
+.env
+.env.*
+!.env.example
 *.local
+.DS_Store
+
+# Cloudflare / Wrangler
+.wrangler/
+.dev.vars
+.dev.vars.*
 
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
-.idea
-.DS_Store
+.idea/
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
-
-vite.config.js
-.env

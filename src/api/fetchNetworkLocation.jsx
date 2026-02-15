@@ -26,6 +26,25 @@ const mapIpApi = (data) => ({
 });
 
 async function FetchNetworkLocation() {
+  // 0) Worker endpoint: uses request.cf when deployed on Cloudflare Workers
+  try {
+    const { data } = await axios.get("/api/network-location", {
+      timeout: 2500,
+    });
+    if (
+      Number.isFinite(Number(data?.latitude)) &&
+      Number.isFinite(Number(data?.longitude))
+    ) {
+      return {
+        latitude: data.latitude,
+        longitude: data.longitude,
+        city: data.city || "",
+      };
+    }
+  } catch (error) {
+    // ignore and fallback
+  }
+
   // 1) Cloudflare-native trace endpoint (works on Cloudflare proxied domain)
   try {
     const { data: traceRaw } = await axios.get("/cdn-cgi/trace", {
