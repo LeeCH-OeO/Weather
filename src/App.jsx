@@ -267,6 +267,31 @@ function App() {
       )} ss:${pad(fmtTime(row.sunset, weatherData.timezone_offset), 9)} ${row.weather[0].description}`;
     }) || [];
 
+  const nowRows =
+    weatherData && aqi
+      ? [
+          [
+            "local_time",
+            fmtDate(weatherData.current.dt, weatherData.timezone_offset),
+          ],
+          [
+            "temp",
+            `${weatherData.current.temp.toFixed(2)} C ${weatherData.current.weather[0].icon}`,
+          ],
+          ["feels_like", `${weatherData.current.feels_like.toFixed(2)} C`],
+          ["humidity", `${weatherData.current.humidity} %`],
+          ["dew_point", `${weatherData.current.dew_point.toFixed(2)} C`],
+          ["visibility", `${weatherData.current.visibility} m`],
+          ["cloud_cover", `${weatherData.current.cloud_cover} %`],
+          ["pressure", `${weatherData.current.pressure.toFixed(0)} hPa`],
+          ["precip", `${weatherData.current.precipitation.toFixed(2)} mm`],
+          ["wind_speed", `${weatherData.current.wind_speed} m/s`],
+          ["wind_dir", `${weatherData.current.wind_direction} deg`],
+          ["condition", weatherData.current.weather[0].description],
+          ["aqi", `${aqi.data.aqi} (${aqi.data.description})`],
+        ].map(([k, v]) => `${pad(k, 10)} : ${v}`)
+      : [];
+
   return (
     <main className="terminal-root">
       <section className="terminal-window">
@@ -447,19 +472,7 @@ function App() {
                 <>
                   <motion.section className="block" {...blockMotion}>
                     <h2>[NOW]</h2>
-                    <pre>{`local_time  : ${fmtDate(weatherData.current.dt, weatherData.timezone_offset)}
-	temp        : ${weatherData.current.temp.toFixed(2)} C ${weatherData.current.weather[0].icon}
-	feels_like  : ${weatherData.current.feels_like.toFixed(2)} C
-	humidity    : ${weatherData.current.humidity} %
-	dew_point   : ${weatherData.current.dew_point.toFixed(2)} C
-	visibility  : ${weatherData.current.visibility} m
-	cloud_cover : ${weatherData.current.cloud_cover} %
-	pressure    : ${weatherData.current.pressure.toFixed(0)} hPa
-	precip      : ${weatherData.current.precipitation.toFixed(2)} mm
-	wind_speed  : ${weatherData.current.wind_speed} m/s
-	wind_dir    : ${weatherData.current.wind_direction} deg
-	condition   : ${weatherData.current.weather[0].description}
-	aqi         : ${aqi.data.aqi} (${aqi.data.description})`}</pre>
+                    <pre>{nowRows.join("\n")}</pre>
                   </motion.section>
 
                   <motion.section
