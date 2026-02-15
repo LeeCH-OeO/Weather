@@ -22,9 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-src/api/ApiKey.jsx
-.firebaserc
-firebase.json
-.firebase/
+
 vite.config.js
 .env
