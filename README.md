@@ -65,9 +65,9 @@ npx wrangler deploy
 ## Data Sources
 
 - [Open-Meteo Forecast API](https://open-meteo.com/en/docs)
-- [Open-Meteo Geocoding API](https://open-meteo.com/en/docs/geocoding-api)
 - [Open-Meteo Air Quality API](https://open-meteo.com/en/docs/air-quality-api)
 - [OpenStreetMap](https://www.openstreetmap.org/)
+- [Nominatim API](https://nominatim.org/)
 
 ## Current Dependencies
 

@@ -25,7 +25,10 @@ async function FetchLocation(latitude, longitude) {
         format: "jsonv2",
         addressdetails: 1,
         zoom: 18,
-        "accept-language": "en",
+        accept_language: "en",
+      },
+      headers: {
+        "Accept-Language": "en",
       },
     });
 

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="80" fill="#0a0a0a"/>
+  <text x="256" y="200" text-anchor="middle" fill="#7ee787" font-family="Courier New,monospace" font-size="48" font-weight="bold">&gt;_</text>
+  <text x="256" y="280" text-anchor="middle" fill="#b9fbc0" font-family="Courier New,monospace" font-size="36">weather</text>
+  <!-- sun icon -->
+  <circle cx="256" cy="370" r="28" fill="none" stroke="#ffd866" stroke-width="5"/>
+  <line x1="256" y1="330" x2="256" y2="320" stroke="#ffd866" stroke-width="5" stroke-linecap="round"/>
+  <line x1="256" y1="410" x2="256" y2="420" stroke="#ffd866" stroke-width="5" stroke-linecap="round"/>
+  <line x1="216" y1="370" x2="206" y2="370" stroke="#ffd866" stroke-width="5" stroke-linecap="round"/>
+  <line x1="296" y1="370" x2="306" y2="370" stroke="#ffd866" stroke-width="5" stroke-linecap="round"/>
+  <line x1="228" y1="342" x2="221" y2="335" stroke="#ffd866" stroke-width="5" stroke-linecap="round"/>
+  <line x1="284" y1="398" x2="291" y2="405" stroke="#ffd866" stroke-width="5" stroke-linecap="round"/>
+  <line x1="228" y1="398" x2="221" y2="405" stroke="#ffd866" stroke-width="5" stroke-linecap="round"/>
+  <line x1="284" y1="342" x2="291" y2="335" stroke="#ffd866" stroke-width="5" stroke-linecap="round"/>
+</svg>

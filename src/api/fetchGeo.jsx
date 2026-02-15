@@ -1,23 +1,22 @@
 import axios from "axios";
 
-const URL = "https://geocoding-api.open-meteo.com/v1/search";
+const URL = "https://nominatim.openstreetmap.org/search";
 
 async function FetchGeo(input) {
   const { data } = await axios.get(URL, {
     params: {
-      name: input,
-      count: 5,
-      language: "en",
-      format: "json",
+      q: input,
+      format: "jsonv2",
+      addressdetails: 1,
+      limit: 5,
+      "accept-language": "en",
     },
   });
 
-  const mapped = (data?.results || []).map((result) => ({
-    lat: result.latitude,
-    lon: result.longitude,
-    display_name: [result.name, result.admin1, result.country]
-      .filter(Boolean)
-      .join(", "),
+  const mapped = (data || []).map((result) => ({
+    lat: Number(result.lat),
+    lon: Number(result.lon),
+    display_name: result.display_name,
   }));
 
   return { data: mapped };
