@@ -381,6 +381,22 @@ function App() {
 										Search
 									</button>
 								</div>
+								<button
+									type="button"
+									className="desktop-action-btn"
+									onClick={handleDeviceLocation}
+									title="Use your browser/device geolocation for current weather"
+								>
+									My Location
+								</button>
+								<button
+									type="button"
+									className="desktop-action-btn"
+									onClick={handleSaveDefault}
+									title="Save the current location as your default startup location"
+								>
+									Save Default
+								</button>
 							</div>
 
 							{loading || !weatherData || !aqi ? (
